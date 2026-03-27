@@ -43,9 +43,10 @@ export default async function handler(
       config: OmniEmbedConfig;
       user: OmniUser;
     };
+    const hasContentId = typeof config?.contentId === 'string' && config.contentId.length > 0;
 
     // Validate required fields
-    if (!config || (!config.contentId && config.contentType !== 'content-discovery')) {
+    if (!config || (!hasContentId && config.contentType !== 'content-discovery')) {
       return res.status(400).json({
         success: false,
         error: {
@@ -68,9 +69,20 @@ export default async function handler(
     // Generate signed URL using the SDK
     let url: string;
     if (config.contentType === 'navigation') {
+      if (typeof config.contentId !== 'string' || config.contentId.length === 0) {
+        return res.status(400).json({
+          success: false,
+          error: {
+            code: 'INVALID_REQUEST',
+            message: 'Missing required field: config.contentId',
+          },
+        });
+      }
+      const contentId = config.contentId;
+
       // Navigation demo: embed full app navigation
       url = await generateEmbedUrl({
-        contentId: config.contentId,
+        contentId,
         contentType: 'dashboard', // Use dashboard for SDK, but set mode
         externalId: user.externalId,
         name: user.name || user.externalId,
@@ -80,6 +92,7 @@ export default async function handler(
         prefersDark: config.prefersDark,
         filterSearchParam: config.filterSearchParam,
         userAttributes: user.attributes,
+        connectionRoles: config.connectionRoles,
         linkAccess: config.linkAccess,
         accessBoost: config.accessBoost,
         customTheme: config.customTheme,
@@ -99,14 +112,26 @@ export default async function handler(
         prefersDark: config.prefersDark,
         filterSearchParam: config.filterSearchParam,
         userAttributes: user.attributes,
+        connectionRoles: config.connectionRoles,
         linkAccess: config.linkAccess,
         accessBoost: config.accessBoost,
         customTheme: config.customTheme,
         customThemeId: config.customThemeId,
       });
     } else {
+      if (typeof config.contentId !== 'string' || config.contentId.length === 0) {
+        return res.status(400).json({
+          success: false,
+          error: {
+            code: 'INVALID_REQUEST',
+            message: 'Missing required field: config.contentId',
+          },
+        });
+      }
+      const contentId = config.contentId;
+
       url = await generateEmbedUrl({
-        contentId: config.contentId,
+        contentId,
         contentType: config.contentType || 'dashboard',
         externalId: user.externalId,
         name: user.name || user.externalId,
@@ -116,6 +141,7 @@ export default async function handler(
         prefersDark: config.prefersDark,
         filterSearchParam: config.filterSearchParam,
         userAttributes: user.attributes,
+        connectionRoles: config.connectionRoles,
         linkAccess: config.linkAccess,
         accessBoost: config.accessBoost,
         customTheme: config.customTheme,
