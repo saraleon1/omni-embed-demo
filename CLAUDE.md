@@ -68,6 +68,13 @@ The app supports these embed modes via `contentType`:
 
 The Omni SDK requires either `host` or `organizationName` but TypeScript can't infer the conditional. The codebase uses `@ts-expect-error` comments in `lib/omni-embed.ts` for the SDK calls — these are intentional and safe.
 
+## Agents
+
+Two documentation agents are available in `.claude/agents/` for looking up Omni docs:
+
+- **`omni-embed-docs`** — Omni embedding docs and full `@omni-co/embed` SDK reference (function signatures, enums, custom theme properties, 2-step SSO flow). Use this for any embed-related questions.
+- **`omni-docs`** — Full Omni platform docs (modeling, API, AI, administration, connections, integrations, etc.). Use this for broader Omni questions beyond embedding.
+
 ## Stack
 
 - Next.js 14 (Pages Router, not App Router)
