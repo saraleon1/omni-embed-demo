@@ -4,6 +4,8 @@
 
 This is a simple web app built with Node.js and Next.js to demonstrate how Omni can be securely embedded for different users.
 
+> Development-only demo: this repository is a local reference app for learning and testing Omni embeds. It is not intended to be deployed to production as-is.
+
 - **Node.js app**: Handles web pages, API routes, and running the app locally.
 - **Omni SDK integration**: Securely generates unique analytics links for each user using the official Omni SDK. **All sensitive logic and secrets are kept server-side; only signed URLs are sent to the client.**
 
@@ -48,6 +50,8 @@ This demo shows how to implement Omni embeds in a multi-user application:
 4. **Authentication integration** - Generate embed URLs based on your app's auth
 
 ## 🚀 Quick Start
+
+This setup is for local development and experimentation. Treat the code, demo users, and diagnostic endpoints as example scaffolding, not production-ready application code.
 
 1. Clone the repository:
 ```bash
@@ -161,7 +165,7 @@ This section explains how the core files in this project interact to securely ge
 ## 🔍 Troubleshooting
 
 ### Environment Validation
-Use the diagnostic endpoint to check your configuration:
+Use the diagnostic endpoint to check your configuration during local development only:
 ```bash
 curl http://localhost:3000/api/test-env
 ```
