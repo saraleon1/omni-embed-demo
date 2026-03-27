@@ -10,6 +10,13 @@ import { OmniEmbed } from '@/components/OmniEmbed';
 import { OmniEmbedConfig, OmniUser } from '@/types/omni';
 import { EmbedConnectionRoles } from '@omni-co/embed';
 import Head from 'next/head';
+import {
+  DASHBOARD_ID,
+  WORKBOOK_ID,
+  CUSTOM_THEME_DASHBOARD_ID,
+  CONNECTION_ID,
+  CUSTOM_THEME_ID,
+} from '@/config/demo-ids';
 
 /*
  * Demo users - Edit this array to mimic real users, groups, and attributes in your Omni instance.
@@ -46,14 +53,13 @@ const DEMO_USERS: OmniUser[] = [
   },
 ];
 
-// Example embed configurations
+// Example embed configurations — IDs come from src/config/demo-ids.ts
 const EMBED_CONFIGS: { name: string; config: OmniEmbedConfig }[] = [
   {
     name: 'Dashboard',
     config: {
       contentType: 'dashboard',
-      // contentId: 'your-dashboard-id-here', // Replace with your actual dashboard ID
-      contentId: '68fde74b',
+      contentId: DASHBOARD_ID,
       theme: 'dawn',
       prefersDark: 'false'  // Forces light mode
     },
@@ -62,15 +68,14 @@ const EMBED_CONFIGS: { name: string; config: OmniEmbedConfig }[] = [
     name: 'Workbook',
     config: {
       contentType: 'workbook',
-      // contentId: 'your-workbook-id-here', // Replace with your actual workbook ID
-      contentId: 'ee1eb1a6',
+      contentId: WORKBOOK_ID,
     },
   },
   {
     name: 'Application',
     config: {
       contentType: 'workbook',
-      contentId: 'ee1eb1a6', // Same workbook, but in application mode
+      contentId: WORKBOOK_ID, // Same workbook, but in application mode
       mode: 'APPLICATION',
     },
   },
@@ -78,9 +83,8 @@ const EMBED_CONFIGS: { name: string; config: OmniEmbedConfig }[] = [
     name: 'Custom Theme Dashboard',
     config: {
       contentType: 'dashboard',
-      // contentId: 'your-dashboard-id-here', // Replace with your actual dashboard ID
-      contentId: '3b9aa13b',
-      customThemeId: '232250d4-cc11-4dff-97a4-cc4298f2f3f1',
+      contentId: CUSTOM_THEME_DASHBOARD_ID,
+      customThemeId: CUSTOM_THEME_ID,
       accessBoost: true, // Enable access boost for this dashboard
       prefersDark: 'true'
       // ,customTheme: {
@@ -99,7 +103,7 @@ const EMBED_CONFIGS: { name: string; config: OmniEmbedConfig }[] = [
     name: 'Full Omni Navigation',
     config: {
       contentType: 'navigation', // Custom type for navigation embedding
-      contentId: '68fde74b', // Use any valid dashboard ID for demo
+      contentId: DASHBOARD_ID, // Use any valid dashboard ID for demo
       mode: 'APPLICATION', // Will be mapped to EmbedSessionMode.Application in backend
       theme: 'dawn',
       prefersDark: 'system'
@@ -117,27 +121,28 @@ const EMBED_CONFIGS: { name: string; config: OmniEmbedConfig }[] = [
   },
 ];
 
-// Map user externalId to their connection roles
+// Map user externalId to their connection roles.
+// The CONNECTION_ID comes from src/config/demo-ids.ts.
 //
 // You can remove this mapping if you want everyone to get the same role for the connection.
-// For example, to give all users the RESTRICTED_QUERIER role for the connection, use:
+// For example, to give all users the RESTRICTED_QUERIER role, pass connectionRoles directly:
 //
 //   config={{
 //     ...currentConfig,
 //     connectionRoles: {
-//       '1dd6899b-569b-4c11-bdc6-f6331ab23b5b': EmbedConnectionRoles.RESTRICTED_QUERIER,
+//       [CONNECTION_ID]: EmbedConnectionRoles.RESTRICTED_QUERIER,
 //     },
 //   }}
 //
 const USER_CONNECTION_ROLES: Record<string, Record<string, EmbedConnectionRoles>> = {
   'user-001': {
-    '1dd6899b-569b-4c11-bdc6-f6331ab23b5b': EmbedConnectionRoles.RESTRICTED_QUERIER,
+    [CONNECTION_ID]: EmbedConnectionRoles.RESTRICTED_QUERIER,
   },
   'user-002': {
-    '1dd6899b-569b-4c11-bdc6-f6331ab23b5b': EmbedConnectionRoles.VIEWER,
+    [CONNECTION_ID]: EmbedConnectionRoles.VIEWER,
   },
   'user-003': {
-    '1dd6899b-569b-4c11-bdc6-f6331ab23b5b': EmbedConnectionRoles.RESTRICTED_QUERIER,
+    [CONNECTION_ID]: EmbedConnectionRoles.RESTRICTED_QUERIER,
     // You can add more connection IDs here if needed
   },
   // Add more users as needed
@@ -237,7 +242,7 @@ export default function Home() {
             </div>
             <div className="mt-4 p-4 bg-gray-50 rounded-lg">
               <p className="text-sm text-gray-600">
-                <strong>Important:</strong> Replace the contentId values in the code with your actual dashboard or workbook IDs from Omni.
+                <strong>Important:</strong> Replace the placeholder IDs in <code>src/config/demo-ids.ts</code> with your actual dashboard, workbook, and connection IDs from Omni.
               </p>
             </div>
           </div>

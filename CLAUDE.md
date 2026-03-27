@@ -45,7 +45,8 @@ index.tsx (user/config selection)
 - **`src/pages/api/embed-url.ts`** — API route. Handles three content type branches: `navigation` (maps to dashboard + Application mode), `content-discovery`, and standard dashboard/workbook.
 - **`src/components/OmniEmbed.tsx`** — Client-side React component. Fetches signed URL from the API, renders an iframe with sandbox attributes.
 - **`src/types/omni.ts`** — Shared types (`OmniEmbedConfig`, `OmniUser`, `OmniError`) used across client and server.
-- **`src/pages/index.tsx`** — Demo page with `DEMO_USERS` array, `EMBED_CONFIGS` array, and `USER_CONNECTION_ROLES` mapping. Edit these to configure the demo.
+- **`src/config/demo-ids.ts`** — All Omni instance-specific IDs (dashboard, workbook, connection, theme). Users edit this single file to connect to their own Omni instance.
+- **`src/pages/index.tsx`** — Demo page with `DEMO_USERS` array, `EMBED_CONFIGS` array, and `USER_CONNECTION_ROLES` mapping. Content IDs are imported from `config/demo-ids.ts`.
 
 ### Content Types
 

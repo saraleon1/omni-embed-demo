@@ -32,7 +32,7 @@ If you just want to see it running, follow these steps:
 
 1. **Clone and install**: Download the code and run `npm install` to get everything set up.
 2. **Configure**: Copy `.env.example` to `.env` and add your Omni secret and organization name (see below).
-3. **Enter content IDs and connection ID**: In `src/pages/index.tsx`, replace the placeholder values (`your-dashboard-id-here`, `your-workbook-id-here`, and `your-connection-id-here`) with your actual dashboard/workbook IDs and connection ID with the appropriate role.
+3. **Enter content IDs and connection ID**: Open `src/config/demo-ids.ts` and replace the placeholder values with your actual dashboard/workbook IDs, connection ID, and (optionally) custom theme ID from your Omni instance.
 4. **Run**: Start the app with `npm run dev` and open it in your browser.
 5. **Try it out**: Switch between users and dashboards to see how the analytics change for each one.
 
@@ -81,9 +81,11 @@ OMNI_ORGANIZATION_NAME=your-org-name
 # OMNI_HOST=omni.yourdomain.com
 ```
 
-4. Update content IDs in `src/pages/index.tsx`:
-   - Replace `your-dashboard-id-here` with actual dashboard IDs
-   - Replace `your-workbook-id-here` with actual workbook IDs
+4. Update content IDs in `src/config/demo-ids.ts`:
+   - Replace `your-dashboard-id` with an actual dashboard ID
+   - Replace `your-workbook-id` with an actual workbook ID
+   - Replace `your-connection-id` with your database connection UUID
+   - Optionally set `CUSTOM_THEME_ID` to a theme UUID from Admin > Themes
 
 5. Run the development server:
 ```bash
@@ -97,6 +99,8 @@ npm run dev
 ```
 embed-demo/
 ├── src/
+│   ├── config/
+│   │   └── demo-ids.ts        # ← Edit this file with your Omni IDs
 │   ├── pages/
 │   │   ├── index.tsx          # Main demo with user switching
 │   │   └── api/
@@ -118,6 +122,7 @@ This section explains how the core files in this project interact to securely ge
 
 | File | Purpose |
 |------|---------|
+| `src/config/demo-ids.ts` | **Start here.** Placeholder IDs for your dashboards, workbooks, connection, and theme. |
 | `src/types/omni.ts` | TypeScript types for user, config, and error objects. |
 | `src/pages/index.tsx` | Main demo page for user/content selection. |
 | `src/components/OmniEmbed.tsx` | React component that fetches a signed embed URL and displays analytics in an iframe. Handles loading and error states. |
@@ -242,7 +247,7 @@ function App() {
 }
 ```
 - Use `path: 'root'` for the Hub, `'my'` for My Content, or `'entity-folder'` for an entity folder.
-- For advanced navigation (e.g., drill into dashboards), you can use the [postMessage API](https://docs.omni.co/docs/embed/external-embedding/customization-and-interactivity). 
+- For advanced navigation (e.g., drill into dashboards), you can use the [Embed Events API](https://docs.omni.co/embed/events). 
 
 ## 📖 Resources
 
