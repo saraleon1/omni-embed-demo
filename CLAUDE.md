@@ -6,6 +6,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Omni Embed Demo — a Next.js 14 (Pages Router) app demonstrating secure SSO embedding of Omni BI analytics. It uses the `@omni-co/embed` SDK server-side to generate signed URLs, which are rendered client-side in iframes. This is an open-source reference implementation for Omni customers.
 
+For Omni work in this repository, prefer the Embed SDK and embed docs over the Omni REST API. Use `@omni-co/embed` plus `docs.omni.co/embed` first; use `docs.omni.co/api` only when the task is explicitly about REST endpoints rather than embedding.
+
 ## Commands
 
 ```bash
