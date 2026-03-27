@@ -17,3 +17,6 @@ Recent history uses short, imperative commit subjects such as `Add support for a
 
 ## Security & Configuration Tips
 Keep secrets only in ignored local env files such as `.env` or `.env.local`; never hard-code Omni secrets or expose them in client-side code. Any logic that generates signed embed URLs must remain server-side in `src/pages/api` or `src/lib/omni-embed.ts`.
+
+## Codex Omni Docs Guidance
+When working on Omni-related tasks in this repository, prefer the Embed SDK and embed documentation over the REST API. Use `https://www.npmjs.com/package/@omni-co/embed` and `https://docs.omni.co/embed` first for signed URL generation, session modes, URL parameters, events, themes, and vanity domains. Use `https://docs.omni.co/api` only when the task is explicitly about Omni REST endpoints rather than embedding. For repo-specific behavior, cross-check `src/lib/omni-embed.ts` and `src/pages/api/embed-url.ts`. Include source links in answers when quoting or explaining Omni behavior.
