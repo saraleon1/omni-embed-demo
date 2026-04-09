@@ -1,0 +1,7 @@
+interface:
+  display_name: "Omni Docs"
+  short_description: "Answer broader Omni platform questions from docs"
+  default_prompt: "Use $omni-docs to answer this Omni platform question from official documentation and include the relevant links."
+
+policy:
+  allow_implicit_invocation: true

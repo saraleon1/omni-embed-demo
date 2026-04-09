@@ -1,0 +1,7 @@
+interface:
+  display_name: "Omni Embed Docs"
+  short_description: "Answer Omni embedding questions from official docs"
+  default_prompt: "Use $omni-embed-docs to answer this Omni embedding question from official sources and include the relevant links."
+
+policy:
+  allow_implicit_invocation: true
