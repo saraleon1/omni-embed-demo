@@ -41,8 +41,8 @@ index.tsx (user/config selection)
 
 ### Key Files
 
-- **`src/lib/omni-embed.ts`** — SDK wrapper. Calls `embedSsoDashboard`, `embedSsoWorkbook`, or `embedSsoContentDiscovery` based on `contentType`. Contains the `EmbedConfig` discriminated union type. This is the only file that touches `OMNI_SECRET`.
-- **`src/pages/api/embed-url.ts`** — API route. Handles three content type branches: `navigation` (maps to dashboard + Application mode), `content-discovery`, and standard dashboard/workbook.
+- **`src/lib/omni-embed.ts`** — SDK wrapper. Calls `embedSsoDashboard`, `embedSsoWorkbook`, or `embedSsoContentDiscovery` based on `contentType`. `chat` and `app` also route through `embedSsoContentDiscovery`, since it accepts an arbitrary `path` and there's no dedicated SDK function for either — `chat` uses `path: '/chat'`, `app` uses `path: '/apps/<contentId>'`. Contains the `EmbedConfig` discriminated union type. This is the only file that touches `OMNI_SECRET`.
+- **`src/pages/api/embed-url.ts`** — API route. Handles content type branches: `navigation` (maps to dashboard + Application mode), `content-discovery`, `chat` (no `contentId` required, same as `content-discovery`), and standard dashboard/workbook/app (require `contentId`).
 - **`src/components/OmniEmbed.tsx`** — Client-side React component. Fetches signed URL from the API, renders an iframe with sandbox attributes.
 - **`src/types/omni.ts`** — Shared types (`OmniEmbedConfig`, `OmniUser`, `OmniError`) used across client and server.
 - **`src/config/demo-ids.ts`** — All Omni instance-specific IDs (dashboard, workbook, connection, theme). Users edit this single file to connect to their own Omni instance.
@@ -55,6 +55,8 @@ The app supports these embed modes via `contentType`:
 - `workbook` — single workbook embed
 - `navigation` — custom type that uses dashboard SDK with `EmbedSessionMode.Application` for full nav
 - `content-discovery` — Hub/home page embed using `embedSsoContentDiscovery` with a `path` param
+- `chat` — Omni AI agent chat embed using `embedSsoContentDiscovery` with `path: '/chat'`. Requires a `RESTRICTED_QUERIER` (or higher) connection/model role — `VIEWER` has no AI access.
+- `app` — embeds a specific Omni App using `embedSsoContentDiscovery` with `path: '/apps/<contentId>'`. Distinct from the "Application" navigation-mode demo entry in `index.tsx`, which is just a workbook shown with `mode: 'APPLICATION'`.
 
 ### Path alias
 

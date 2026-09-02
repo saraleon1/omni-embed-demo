@@ -58,7 +58,21 @@ interface ContentDiscoveryEmbedConfig extends BaseEmbedConfig {
   path: string;
 }
 
-export type EmbedConfig = DashboardEmbedConfig | WorkbookEmbedConfig | ContentDiscoveryEmbedConfig;
+interface ChatEmbedConfig extends BaseEmbedConfig {
+  contentType: 'chat';
+}
+
+interface AppEmbedConfig extends BaseEmbedConfig {
+  contentType: 'app';
+  contentId: string;
+}
+
+export type EmbedConfig =
+  | DashboardEmbedConfig
+  | WorkbookEmbedConfig
+  | ContentDiscoveryEmbedConfig
+  | ChatEmbedConfig
+  | AppEmbedConfig;
 
 export async function generateEmbedUrl(config: EmbedConfig): Promise<string> {
   const secret = process.env.OMNI_SECRET;
@@ -117,7 +131,28 @@ export async function generateEmbedUrl(config: EmbedConfig): Promise<string> {
         path: config.path,
         connectionRoles: baseConfig.connectionRoles || {},
       });
-    
+
+    case 'chat':
+      // AI Chat has no dedicated SDK function — embedSsoContentDiscovery accepts
+      // any content path, so '/chat' routes to the Omni AI agent chat experience.
+      // Requires RESTRICTED_QUERIER (or higher) connection/model role; VIEWER has no AI access.
+      // @ts-expect-error: host/organizationName type is stricter than runtime usage
+      return await embedSsoContentDiscovery({
+        ...baseConfig,
+        path: '/chat',
+        connectionRoles: baseConfig.connectionRoles || {},
+      });
+
+    case 'app':
+      // Same rationale as 'chat': no dedicated SDK function for Omni Apps,
+      // so embedSsoContentDiscovery's generic path is used instead.
+      // @ts-expect-error: host/organizationName type is stricter than runtime usage
+      return await embedSsoContentDiscovery({
+        ...baseConfig,
+        path: `/apps/${config.contentId}`,
+        connectionRoles: baseConfig.connectionRoles || {},
+      });
+
     case 'dashboard':
     default:
       // @ts-expect-error: host/organizationName type is stricter than runtime usage

@@ -4,6 +4,8 @@
  * Where to find them:
  *   - Dashboard / Workbook ID: the short code in the URL when viewing content in Omni
  *     e.g. https://acme.omniapp.co/dashboards/abcd1234 → contentId is "abcd1234"
+ *   - Application ID: the short code in the URL when viewing an Omni App
+ *     e.g. https://acme.omniapp.co/apps/abcd1234 → contentId is "abcd1234"
  *   - Connection ID: Admin > Connections in your Omni instance (the UUID shown for each connection)
  *   - Custom Theme ID: Admin > Themes — click a theme to see its UUID
  */
@@ -14,6 +16,9 @@ export const DASHBOARD_ID = 'your-dashboard-id';
 
 /** A workbook to embed (short GUID from the workbook URL). */
 export const WORKBOOK_ID = 'your-workbook-id';
+
+/** An Omni App to embed (short GUID from the app URL, e.g. /apps/abcd1234). */
+export const APP_ID = 'your-app-id';
 
 /** A dashboard to show with a custom theme applied. Can be the same as DASHBOARD_ID. */
 export const CUSTOM_THEME_DASHBOARD_ID = 'your-dashboard-id';

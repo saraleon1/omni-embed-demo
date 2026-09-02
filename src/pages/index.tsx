@@ -13,6 +13,7 @@ import Head from 'next/head';
 import {
   DASHBOARD_ID,
   WORKBOOK_ID,
+  APP_ID,
   CUSTOM_THEME_DASHBOARD_ID,
   CONNECTION_ID,
   CUSTOM_THEME_ID,
@@ -115,6 +116,26 @@ const EMBED_CONFIGS: { name: string; config: OmniEmbedConfig }[] = [
     config: {
       contentType: 'content-discovery', // Official way to land on the hub page
       path: 'root', // This lands on the Hub page
+      theme: 'dawn',
+      prefersDark: 'system'
+    },
+  },
+  // AI Chat demo: embeds the Omni AI agent chat experience.
+  // Requires a connection role of RESTRICTED_QUERIER or higher — VIEWER has no AI access.
+  {
+    name: 'AI Chat',
+    config: {
+      contentType: 'chat',
+      theme: 'dawn',
+      prefersDark: 'system'
+    },
+  },
+  // Omni App demo: embeds a specific App (distinct from the "Application" navigation mode above).
+  {
+    name: 'Omni App',
+    config: {
+      contentType: 'app',
+      contentId: APP_ID,
       theme: 'dawn',
       prefersDark: 'system'
     },
