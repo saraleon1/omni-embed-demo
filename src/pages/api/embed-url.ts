@@ -46,7 +46,10 @@ export default async function handler(
     const hasContentId = typeof config?.contentId === 'string' && config.contentId.length > 0;
 
     // Validate required fields
-    if (!config || (!hasContentId && config.contentType !== 'content-discovery')) {
+    if (
+      !config ||
+      (!hasContentId && config.contentType !== 'content-discovery' && config.contentType !== 'chat')
+    ) {
       return res.status(400).json({
         success: false,
         error: {
@@ -98,6 +101,24 @@ export default async function handler(
         customTheme: config.customTheme,
         customThemeId: config.customThemeId,
         mode: EmbedSessionMode.Application, // Use enum value for type safety
+      });
+    } else if (config.contentType === 'chat') {
+      // AI Chat demo: embed the Omni AI agent chat experience
+      url = await generateEmbedUrl({
+        contentType: 'chat',
+        externalId: user.externalId,
+        name: user.name || user.externalId,
+        email: user.email,
+        entity: typeof user.attributes?.entity === 'string' ? user.attributes.entity : undefined,
+        theme: config.theme,
+        prefersDark: config.prefersDark,
+        filterSearchParam: config.filterSearchParam,
+        userAttributes: user.attributes,
+        connectionRoles: config.connectionRoles,
+        linkAccess: config.linkAccess,
+        accessBoost: config.accessBoost,
+        customTheme: config.customTheme,
+        customThemeId: config.customThemeId,
       });
     } else if (config.contentType === 'content-discovery') {
       // Hub (Home Page) demo: embed content discovery at root

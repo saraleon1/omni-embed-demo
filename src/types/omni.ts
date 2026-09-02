@@ -4,7 +4,7 @@
  */
 export interface OmniEmbedConfig {
   contentId?: string;
-  contentType?: 'dashboard' | 'workbook' | 'navigation' | 'content-discovery';
+  contentType?: 'dashboard' | 'workbook' | 'navigation' | 'content-discovery' | 'chat' | 'app';
   /** Controls navigation embedding: 'APPLICATION' for full app navigation, 'SINGLE_CONTENT' (default) for single dashboard/workbook. */
   mode?: string;
   theme?: 'dawn' | 'vibes' | 'breeze' | 'blank';
